@@ -1,0 +1,36 @@
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 30px;
+
+  li {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #fe5f1e;
+    border-radius: 30px;
+    transition: all 0.2s ease-in-out;
+    width: 43px;
+    text-align: center;
+    &:hover {
+      transform: translateY(5px);
+      background-color: #fe5f1e;
+      a {
+        color: white;
+      }
+    }
+    &:active {
+      transform: translateY(0px);
+    }
+  }
+
+  :global {
+    .selected {
+      background-color: #fe5f1e;
+      a {
+        color: white;
+      }
+    }
+  }
+}

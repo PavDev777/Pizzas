@@ -1,7 +1,12 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSort } from "../redux/slices/filterSlice";
 
-export const Sort = ({ sortValue, setMain }) => {
+export const Sort = () => {
   const [activePopup, setActivePopup] = React.useState(false);
+  const sortValue = useSelector(({ filter }) => filter.sort);
+  const dispatch = useDispatch();
+
   const list = [
     { name: "популярности", sort: "rating" },
     { name: "цене", sort: "price" },
@@ -12,7 +17,7 @@ export const Sort = ({ sortValue, setMain }) => {
   ];
 
   const onClickPopup = (obj) => {
-    setMain(obj);
+    dispatch(setSort(obj));
     setActivePopup(false);
   };
 
