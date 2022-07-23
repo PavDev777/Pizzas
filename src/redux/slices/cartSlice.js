@@ -26,9 +26,14 @@ export const cartSlice = createSlice({
     },
     removePizza(state, { payload }) {
       state.pizzas = state.pizzas.filter((obj) => obj.id !== payload.id);
+      state.totalPrice = state.pizzas.reduce(
+        (total, obj) => total + obj.price * obj.count,
+        0
+      );
     },
     clearPizzas(state) {
       state.pizzas = [];
+      state.totalPrice = 0;
     },
     decrPizzas(state, { payload }) {
       const findPizza = state.pizzas.find((obj) => obj.id === payload.id);
@@ -36,8 +41,16 @@ export const cartSlice = createSlice({
       if (findPizza) {
         if (findPizza.count === 1) {
           state.pizzas = state.pizzas.filter((obj) => obj.id !== payload.id);
+          state.totalPrice = state.pizzas.reduce(
+            (total, obj) => total + obj.price * obj.count,
+            0
+          );
         } else {
           findPizza.count--;
+          state.totalPrice = state.pizzas.reduce(
+            (total, obj) => total + obj.price * obj.count,
+            0
+          );
         }
       }
     },
