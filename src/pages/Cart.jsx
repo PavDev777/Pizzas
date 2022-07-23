@@ -1,10 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../components/CartItem";
+import { cartSelector, clearPizzas } from "../redux/slices/cartSlice";
+import { EmptyCart } from "../components/EmptyCart";
+import { GoBackButton } from "../components/GoBackButton";
 
 export const Cart = () => {
-  const items = useSelector(({ cart }) => cart.pizzas);
+  const { totalPrice, pizzas } = useSelector(cartSelector);
+  const dispatch = useDispatch();
+
+  const totalPizzas = pizzas.reduce((total, obj) => total + obj.count, 0);
+
+  if (!pizzas.length) {
+    return <EmptyCart />;
+  }
 
   return (
     <div className="container container--cart ">
@@ -80,50 +89,28 @@ export const Cart = () => {
               ></path>
             </svg>
 
-            <span>Очистить корзину</span>
+            <span onClick={() => dispatch(clearPizzas())}>
+              Очистить корзину
+            </span>
           </div>
         </div>
         <div className="content__items">
-          {items?.map((obj) => (
+          {pizzas?.map((obj) => (
             <CartItem key={obj.id} {...obj} />
           ))}
         </div>
         <div className="cart__bottom">
           <div className="cart__bottom-details">
             <span>
-              {" "}
-              Всего пицц: <b>3 шт.</b>{" "}
+              Всего пицц: <b>{totalPizzas && `${totalPizzas} шт.`} </b>
             </span>
             <span>
               {" "}
-              Сумма заказа: <b>900 ₽</b>{" "}
+              Сумма заказа: <b>{totalPrice} ₽</b>{" "}
             </span>
           </div>
           <div className="cart__bottom-buttons">
-            <a
-              href="/"
-              className="button button--outline button--add go-back-btn"
-            >
-              <svg
-                width="8"
-                height="14"
-                viewBox="0 0 8 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7 13L1 6.93015L6.86175 1"
-                  stroke="#D3D3D3"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></path>
-              </svg>
-
-              <Link to="/">
-                <span>Вернуться назад</span>
-              </Link>
-            </a>
+            <GoBackButton />
             <div className="button pay-btn">
               <span>Оплатить сейчас</span>
             </div>

@@ -1,0 +1,16 @@
+.emptyCart {
+  display: grid;
+  place-items: center;
+  row-gap: 10px;
+}
+
+.emptyCartImg {
+  width: 100%;
+  height: auto;
+  max-width: 350px;
+}
+
+.emptyCartText {
+  font-size: 28px;
+  margin-bottom: 20px;
+}

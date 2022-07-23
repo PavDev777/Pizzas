@@ -7,21 +7,21 @@ import { Pagination } from "../components/Pagination";
 import { Sort, list } from "../components/Sort";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  filter,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { fetchPizzas, pizzas } from "../redux/slices/pizzasSlice";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const { categoryId, currentPage, sort } = useSelector(({ filter }) => filter);
+  const { categoryId, currentPage, sort } = useSelector(filter);
+  const { items, steps } = useSelector(pizzas);
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
-  const [items, setItems] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     if (window.location.search) {
@@ -40,19 +40,15 @@ export const Home = () => {
 
   React.useEffect(() => {
     if (!isSearch.current) {
-      setLoading(true);
-      const fetchingData = async () => {
-        const response = await axios.get(
-          `https://62b6fab56999cce2e80b0ed9.mockapi.io/items?page=${currentPage}&limit=4&${
-            categoryId > 0 ? `category=${categoryId}` : ""
-          }&sortBy=${sort.sort}&order=desc`
-        );
-        const data = await response.data;
-        setItems(data);
-        setLoading(false);
-      };
-      fetchingData();
+      dispatch(
+        fetchPizzas({
+          categoryId,
+          currentPage,
+          sort,
+        })
+      );
     }
+
     isSearch.current = false;
     window.scrollTo(0, 0);
   }, [categoryId, sort, currentPage]);
@@ -85,12 +81,18 @@ export const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {loading
-          ? [...new Array(6)].map((_, idx) => <Skeleton key={idx} />)
-          : items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
-      </div>
-      <Pagination value={currentPage} onChangePage={onPageChange} />
+      {steps === "error" ? (
+        <div>Error</div>
+      ) : (
+        <>
+          <div className="content__items">
+            {steps === "loading"
+              ? [...new Array(6)].map((_, idx) => <Skeleton key={idx} />)
+              : items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+          </div>
+          <Pagination value={currentPage} onChangePage={onPageChange} />
+        </>
+      )}
     </div>
   );
 };
