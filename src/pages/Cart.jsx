@@ -1,19 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../components/CartItem";
-import { clearPizzas } from "../redux/slices/cartSlice";
+import { cartSelector, clearPizzas } from "../redux/slices/cartSlice";
 import { EmptyCart } from "../components/EmptyCart";
 import { GoBackButton } from "../components/GoBackButton";
 
 export const Cart = () => {
-  const items = useSelector(({ cart }) => cart.pizzas);
-  const totalPrice = useSelector(({ cart }) => cart.totalPrice);
+  const { totalPrice, pizzas } = useSelector(cartSelector);
   const dispatch = useDispatch();
 
-  const totalPizzas = items.reduce((total, obj) => total + obj.count, 0);
+  const totalPizzas = pizzas.reduce((total, obj) => total + obj.count, 0);
 
-  if (!items.length) {
+  if (!pizzas.length) {
     return <EmptyCart />;
   }
 
@@ -97,7 +95,7 @@ export const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {items?.map((obj) => (
+          {pizzas?.map((obj) => (
             <CartItem key={obj.id} {...obj} />
           ))}
         </div>

@@ -7,17 +7,18 @@ import { Pagination } from "../components/Pagination";
 import { Sort, list } from "../components/Sort";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  filter,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas, pizzas } from "../redux/slices/pizzasSlice";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const { categoryId, currentPage, sort } = useSelector(({ filter }) => filter);
-  const { items, steps } = useSelector(({ pizzas }) => pizzas);
+  const { categoryId, currentPage, sort } = useSelector(filter);
+  const { items, steps } = useSelector(pizzas);
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
