@@ -6,7 +6,25 @@ import {
 } from "../../redux/slices/cartSlice";
 import { useDispatch } from "react-redux";
 
-export const CartItem = ({ id, title, price, imageUrl, type, size, count }) => {
+type CartItemProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  type: string;
+  size: number;
+  count: number;
+};
+
+export const CartItem: React.FC<CartItemProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  type,
+  size,
+  count,
+}) => {
   const dispatch = useDispatch();
 
   const onIncrement = () => {

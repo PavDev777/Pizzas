@@ -5,11 +5,14 @@ import { cartSelector, clearPizzas } from "../redux/slices/cartSlice";
 import { EmptyCart } from "../components/EmptyCart";
 import { GoBackButton } from "../components/GoBackButton";
 
-export const Cart = () => {
+export const Cart: React.FC = () => {
   const { totalPrice, pizzas } = useSelector(cartSelector);
   const dispatch = useDispatch();
 
-  const totalPizzas = pizzas.reduce((total, obj) => total + obj.count, 0);
+  const totalPizzas = pizzas.reduce(
+    (total: number, obj: any) => total + obj.count,
+    0
+  );
 
   if (!pizzas.length) {
     return <EmptyCart />;
@@ -95,7 +98,7 @@ export const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {pizzas?.map((obj) => (
+          {pizzas?.map((obj: any) => (
             <CartItem key={obj.id} {...obj} />
           ))}
         </div>

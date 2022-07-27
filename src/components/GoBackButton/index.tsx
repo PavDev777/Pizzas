@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import React from "react";
 
-export const GoBackButton = ({ emptyCart }) => (
+type GoBackButtonProps = {
+  emptyCart?: boolean;
+};
+
+export const GoBackButton: React.FC<GoBackButtonProps> = ({ emptyCart }) => (
   <a href="/" className="button button--outline button--add go-back-btn">
     {!emptyCart && (
       <svg

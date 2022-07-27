@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logoSvg from "../assets/img/pizza-logo.svg";
-import { Search } from "./Search";
 import { useSelector } from "react-redux";
 import { cartSelector } from "../redux/slices/cartSlice";
 
 export const Header = () => {
   const { totalPrice, pizzas } = useSelector(cartSelector);
 
-  const totalPizzasCount = pizzas.reduce((total, obj) => total + obj.count, 0);
+  const totalPizzasCount = pizzas.reduce(
+    (total: number, obj: any) => total + obj.count,
+    0
+  );
 
   return (
     <div className="header">
@@ -20,7 +22,6 @@ export const Header = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>{totalPrice} ₽</span>

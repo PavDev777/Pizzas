@@ -15,7 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas, pizzas } from "../redux/slices/pizzasSlice";
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const navigate = useNavigate();
   const { categoryId, currentPage, sort } = useSelector(filter);
   const { items, steps } = useSelector(pizzas);
@@ -41,6 +41,7 @@ export const Home = () => {
   React.useEffect(() => {
     if (!isSearch.current) {
       dispatch(
+        // @ts-ignore
         fetchPizzas({
           categoryId,
           currentPage,
@@ -66,11 +67,11 @@ export const Home = () => {
     isMounted.current = true;
   }, [categoryId, sort, currentPage]);
 
-  const onClickCategories = (id) => {
-    dispatch(setCategoryId(id));
+  const onClickCategories = (idx: number) => {
+    dispatch(setCategoryId(idx));
   };
 
-  const onPageChange = (numb) => {
+  const onPageChange = (numb: number) => {
     dispatch(setCurrentPage(numb));
   };
 
@@ -88,7 +89,7 @@ export const Home = () => {
           <div className="content__items">
             {steps === "loading"
               ? [...new Array(6)].map((_, idx) => <Skeleton key={idx} />)
-              : items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+              : items?.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)}
           </div>
           <Pagination value={currentPage} onChangePage={onPageChange} />
         </>
