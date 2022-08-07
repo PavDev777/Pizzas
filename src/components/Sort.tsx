@@ -1,18 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterSort, setSort } from "../redux/slices/filterSlice";
+import {
+  filterSort,
+  setSort,
+  Sorting,
+  SortPropertiesEnum,
+} from "../redux/slices/filterSlice";
 
-type SortItem = {
-  name: string;
-  sort: string;
-};
-
-export const list: SortItem[] = [
-  { name: "популярности", sort: "rating" },
-  { name: "цене", sort: "price" },
+export const list: Sorting[] = [
+  { name: "популярности", sort: SortPropertiesEnum.RATING },
+  { name: "цене", sort: SortPropertiesEnum.PRICE },
   {
     name: "алфавиту",
-    sort: "title",
+    sort: SortPropertiesEnum.TITLE,
   },
 ];
 
@@ -22,7 +22,7 @@ export const Sort = () => {
   const dispatch = useDispatch();
   const sortRef = React.useRef<HTMLDivElement>(null);
 
-  const onClickPopup = (obj: SortItem) => {
+  const onClickPopup = (obj: Sorting) => {
     dispatch(setSort(obj));
     setActivePopup(false);
   };

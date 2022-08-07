@@ -5,7 +5,7 @@ import { Skeleton } from "../components/Skeleton";
 import { PizzaBlock } from "../components/PizzaBlock";
 import { Pagination } from "../components/Pagination";
 import { Sort, list } from "../components/Sort";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   filter,
   setCategoryId,
@@ -14,12 +14,13 @@ import {
 } from "../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas, pizzas } from "../redux/slices/pizzasSlice";
+import { useAppDispatch } from "../redux/store";
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
   const { categoryId, currentPage, sort } = useSelector(filter);
   const { items, steps } = useSelector(pizzas);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
@@ -28,12 +29,11 @@ export const Home: React.FC = () => {
       const params = qs.parse(window.location.search.substring(1));
       const sorting = list.find((obj) => obj.sort === params.sort);
 
-      dispatch(
-        setFilters({
-          ...params,
-          sort: sorting,
-        })
-      );
+      if (sorting) {
+        params.sort = sorting;
+      }
+      dispatch(setFilters(params));
+
       isSearch.current = true;
     }
   }, []);
@@ -41,7 +41,6 @@ export const Home: React.FC = () => {
   React.useEffect(() => {
     if (!isSearch.current) {
       dispatch(
-        // @ts-ignore
         fetchPizzas({
           categoryId,
           currentPage,

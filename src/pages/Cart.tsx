@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CartItem } from "../components/CartItem";
+import { CartPizza } from "../components/CartItem";
 import { cartSelector, clearPizzas } from "../redux/slices/cartSlice";
 import { EmptyCart } from "../components/EmptyCart";
 import { GoBackButton } from "../components/GoBackButton";
@@ -99,7 +99,7 @@ export const Cart: React.FC = () => {
         </div>
         <div className="content__items">
           {pizzas?.map((obj: any) => (
-            <CartItem key={obj.id} {...obj} />
+            <CartPizza key={obj.id} {...obj} />
           ))}
         </div>
         <div className="cart__bottom">
