@@ -1,11 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  filterSort,
-  setSort,
-  Sorting,
-  SortPropertiesEnum,
-} from "../redux/slices/filterSlice";
+import { setSort } from "../redux/slices/filter/slice";
+import { Sorting, SortPropertiesEnum } from "../redux/slices/filter/types";
+import { filterSort } from "../redux/slices/filter/selectors";
 
 export const list: Sorting[] = [
   { name: "популярности", sort: SortPropertiesEnum.RATING },

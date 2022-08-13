@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CartPizza } from "../components/CartItem";
-import { cartSelector, clearPizzas } from "../redux/slices/cartSlice";
+import { clearPizzas } from "../redux/slices/cart /slice";
 import { EmptyCart } from "../components/EmptyCart";
 import { GoBackButton } from "../components/GoBackButton";
+import { cartSelector } from "../redux/slices/cart /selectors";
 
 export const Cart: React.FC = () => {
   const { totalPrice, pizzas } = useSelector(cartSelector);

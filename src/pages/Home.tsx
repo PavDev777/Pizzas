@@ -7,14 +7,15 @@ import { Pagination } from "../components/Pagination";
 import { Sort, list } from "../components/Sort";
 import { useSelector } from "react-redux";
 import {
-  filter,
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from "../redux/slices/filterSlice";
+} from "../redux/slices/filter/slice";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas, pizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas } from "../redux/slices/pizzas/slice";
 import { useAppDispatch } from "../redux/store";
+import { filter } from "../redux/slices/filter/selectors";
+import { pizzas } from "../redux/slices/pizzas/selectors";
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();

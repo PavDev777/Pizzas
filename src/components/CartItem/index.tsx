@@ -1,11 +1,11 @@
 import React from "react";
 import {
   addPizza,
-  CartItem,
   decrPizzas,
   removePizza,
-} from "../../redux/slices/cartSlice";
+} from "../../redux/slices/cart /slice";
 import { useDispatch } from "react-redux";
+import { CartItem } from "../../redux/slices/cart /types";
 
 export const CartPizza: React.FC<CartItem> = ({
   id,
@@ -27,7 +27,11 @@ export const CartPizza: React.FC<CartItem> = ({
   };
 
   const onRemovePizza = () => {
-    dispatch(removePizza(id));
+    // eslint-disable-next-line no-restricted-globals
+    const deletePizza = confirm("Вы действительно хотите удалить пиццу ?");
+    if (deletePizza) {
+      dispatch(removePizza(id));
+    }
   };
 
   return (
@@ -42,7 +46,7 @@ export const CartPizza: React.FC<CartItem> = ({
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
           onClick={onDecrement}
           className="button button--outline button--circle cart__item-count-minus"
         >
@@ -62,9 +66,9 @@ export const CartPizza: React.FC<CartItem> = ({
               fill="#EB5A1E"
             ></path>
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
-        <div
+        <button
           onClick={onIncrement}
           className="button button--outline button--circle cart__item-count-plus"
         >
@@ -84,7 +88,7 @@ export const CartPizza: React.FC<CartItem> = ({
               fill="#EB5A1E"
             ></path>
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{price * count} ₽</b>
