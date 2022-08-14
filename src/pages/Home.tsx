@@ -1,10 +1,13 @@
 import React from "react";
 import qs from "qs";
-import { Categories } from "../components/Categories";
-import { Skeleton } from "../components/Skeleton";
-import { PizzaBlock } from "../components/PizzaBlock";
-import { Pagination } from "../components/Pagination";
-import { Sort, list } from "../components/Sort";
+import {
+  Categories,
+  Skeleton,
+  PizzaBlock,
+  Pagination,
+  Sort,
+  list,
+} from "../components/";
 import { useSelector } from "react-redux";
 import {
   setCategoryId,
